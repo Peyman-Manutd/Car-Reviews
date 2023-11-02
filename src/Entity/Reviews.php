@@ -37,6 +37,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
     operations: [new GetCollection()]
 )]
+#[ApiResource(
+    normalizationContext: ['groups' => ['reviews.read']],
+    shortName: 'reviews',
+    description: 'Retrieves the collection of top rated latest reviews from a specific car',
+    uriTemplate: 'cars/{carId}/latest_reviews',
+    uriVariables: [
+        'carId' => new Link(fromClass: Car::class, toProperty: 'car')
+    ],
+    controller: 'App\Controller\CarController::getLatestReviews',
+    operations: [new GetCollection()]
+)]
 class Reviews
 {
     #[ORM\Id]

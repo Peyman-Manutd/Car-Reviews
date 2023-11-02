@@ -13,12 +13,27 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Car|null findOneBy(array $criteria, array $orderBy = null)
  * @method Car[]    findAll()
  * @method Car[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Reviews[] latestCarReviewsWithAboveSixStars(int $cardId)
  */
 class CarRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Car::class);
+    }
+    
+    public function latestCarReviewsWithAboveSixStars(int $carId): array
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT r FROM App\Entity\Reviews r
+                WHERE r.car = :carId
+                AND r.rating > 6
+                ORDER BY r.rating DESC'
+            )
+            ->setParameter('carId', $carId)
+            ->setMaxResults(5)
+            ->getResult();
     }
 
 //    /**

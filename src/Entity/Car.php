@@ -13,6 +13,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: CarRepository::class)]
 #[ApiResource(
@@ -36,14 +37,17 @@ class Car
 
     #[ORM\Column(length: 100)]
     #[Groups(['car.read', 'car.write', 'reviews.read'])]
+    #[NotBlank()]
     private ?string $brand = null;
 
     #[ORM\Column(length: 100)]
     #[Groups(['car.read', 'car.write', 'reviews.read'])]
+    #[NotBlank()]
     private ?string $model = null;
 
     #[ORM\Column(length: 50)]
     #[Groups(['car.read', 'car.write', 'reviews.read'])]
+    #[NotBlank()]
     private ?string $color = null;
 
     #[ORM\OneToMany(

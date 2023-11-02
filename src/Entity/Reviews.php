@@ -13,6 +13,9 @@ use App\Repository\ReviewsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+use Symfony\Component\Validator\Constraints\Positive;
 
 #[ORM\Entity(repositoryClass: ReviewsRepository::class)]
 #[ApiResource(
@@ -57,6 +60,7 @@ class Reviews
 
     #[ORM\Column(type: Types::SMALLINT)]
     #[Groups(['reviews.read', 'reviews.write', 'car.read'])]
+    #[Positive(), LessThanOrEqual(10)]
     private ?int $rating = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -70,6 +74,7 @@ class Reviews
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Groups(['reviews.read', 'reviews.write'])]
+    #[DateTime()]
     private ?\DateTimeInterface $createdAt = null;
 
     public function getId(): ?int

@@ -6,20 +6,22 @@ Follow these steps to set up the projectFollow these steps to set up the project
 
 1. Clone this repository to your local machine.
 
-2. Build the application using Docker
+2. Create `.env` file in project's root directory and copy `.env.example` context to `.env`
+
+3. Build the application using Docker
 
     ```
     docker compose up -d --build
     ```
 
-3. Run the following commands to migrate database
+4. Run the following commands to migrate database
 
     ```
     docker exec -it car_reviews-web-1 /bin/bash
     php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
     ```
 
-4. You can now access to the API at `http://localhost:8088/api`.
+5. You can now access to the API at `http://localhost:8088/api`.
 
 ## Endpoints
 
